@@ -1,22 +1,22 @@
-１．このアーカイブについて
-　このアーカイブ・ファイルに含まれるファイルは、カベソンと名付けられた
-Pascalサブセットのコンパイラ・ソースです。
+1. About this archive
+The file contained in this archive file was named Caveson.
+The compiler source for the Pascal subset.
 
-２．コンパイルしてみるためには
-　コンパイラ本体のコンパイルには、カベソン Ver0.08 の実行形式が必要です。
-　コンパイラドライバのコンパイルには、Turbo Pascal Ver5.5以降が必要です。
-　コンパイルは、下記の要領で行って下さい。
+2. To try compiling
+The execution format of Caveson Ver0.08 is required to compile the compiler itself.
+Turbo Pascal Ver5.5 or later is required to compile the compiler driver.
+Compile as follows.
 
-A>TPC CAB     コンパイラドライバのコンパイル
-A>CAB PHASH   完全ハッシュ関数生成系のコンパイル
-A>MAKE        コンパイラ本体のコンパイル
+A>TPC CAB     Compiling the compiler driver
+A>CAB PHASH   Compiling a complete hash function generator
+A>MAKE        Compiling the compiler itself
 
-CAB.EXE はコンパイラドライバ、CAB1.EXE はコンパイラ本体です。
+CAB.EXE is the compiler driver and CAB1.EXE is the compiler itself.
 
-以上、文責は
+Above, the responsibility is
 
 
-徳丸浩／ockeghem
+Hiroshi Tokumaru / ockeghem
 	htokumar@jun.email.ne.jp
 	QGB01521@niftyserve.or.jp
 	hiroshi_tokumaru@msn.com
