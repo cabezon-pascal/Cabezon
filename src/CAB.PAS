@@ -112,7 +112,7 @@ begin
 	end; { for }
 end; { runTimeOption }
 
-function nextPath(var pathString : envString; var path : paramString) : 
+function nextPath(var pathString : envString; var path : paramString) :
 		boolean;
 var
 	p : integer;
