@@ -1,8 +1,8 @@
-#	カベソンコンパイラのためのＭＡＫＥＦＩＬＥ
+#	MAKEFILE for the Caveson compiler
 #
 #	'91/03/01  BY Ockeghem
 #
-.SUFFIXES: .obj .pas	# Borland make の場合は、この行をコメントにする
+.SUFFIXES: .obj .pas	# For Borland make, comment this line
 
 .pas.obj :
 	cab /c /j $<
