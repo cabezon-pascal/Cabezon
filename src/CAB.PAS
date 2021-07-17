@@ -104,7 +104,7 @@ begin
 					end;
 				else
 					begin
-						writeln('Inappropriate option: ', ps);
+						writeln('Unknown option : ', ps);
 						writeln;
 						usage
 					end
@@ -160,7 +160,7 @@ begin
 		next := nextPath(pathString, path)
 	until (DosError = 0) or (next = false);
 	if DosError <> 0 then begin
-		writeln('Unable execute command : ', prog);
+		writeln('Unable to execute command : ', prog);
 		halt(255)
 	end else begin
 		rCode := DosExitCode;
