@@ -3,8 +3,8 @@ The file contained in this archive file was named Cabezon.
 The compiler source for the Pascal subset.
 
 2. To try compiling
-The execution format of Cabezon Ver0.08 is required to compile the compiler itself.
-Turbo Pascal Ver5.5 or later is required to compile the compiler driver.
+Cabezon version 0.08 binaries are required to compile the compiler itself.
+Turbo Pascal version 5.5 or later is required to compile the compiler driver.
 Compile as follows.
 
 A>TPC CAB     Compiling the compiler driver
