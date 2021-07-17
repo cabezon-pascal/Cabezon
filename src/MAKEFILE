@@ -2,7 +2,7 @@
 #
 #	'91/03/01  BY Ockeghem
 #
-.SUFFIXES: .obj .pas	# For Borland make, comment this line
+.SUFFIXES: .obj .pas	# For Borland MAKE, comment this line
 
 .pas.obj :
 	cab /c /j $<
