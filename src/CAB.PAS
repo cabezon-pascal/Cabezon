@@ -1,6 +1,6 @@
 (* file = cab.pas
  *
- * cab.exe : カベソンコンパイラ・ドライバ
+ * cab.exe : Caveson compiler driver
  *
  * Copyright (C) 1990, 93  Ockeghem
  *)
@@ -104,7 +104,7 @@ begin
 					end;
 				else
 					begin
-						writeln('不適切なオプションです：', ps);
+						writeln('Inappropriate option: ', ps);
 						writeln;
 						usage
 					end
@@ -192,7 +192,7 @@ begin
 		tmp := '.\'
 	else
 		case tmp[length(tmp)] of
-			':', '/', '\':;	(* 何もしない *)
+			':', '/', '\':;	(* do nothing *)
 			else
 				tmp := tmp + '\';
 		end;
