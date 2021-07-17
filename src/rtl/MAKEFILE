@@ -1,0 +1,27 @@
+.pas.obj:
+	cab /j /c $*.pas
+	tlib clib.lib -+$*
+####	lib clib.lib -+$*;
+
+.asm.obj:
+	cab /j /c $*.asm
+	tlib clib.lib -+$*
+####	lib clib.lib -+$*;
+
+clib.lib : LOWIO2.obj READINT.obj READRL.obj READST1.obj SKIPWH.obj \
+		STRCMP.obj flush.obj flushif.obj getdata.obj getc1.obj \
+		ungetc.obj putch.obj putspc.obj eof.obj \
+		_WRITELN.obj WRITERL.obj WRITEINT.obj \
+		pos.obj cpos.obj copy.obj upcase.obj strcat.obj \
+		C.obj I8087W1.obj I8087W2.obj ITOR.obj \
+		LN.obj LOG10.obj ROUND.obj SQRT.obj TRUNC.obj paramcnt.obj \
+		aainit.obj ZZFLUSH.obj new.obj dispose.obj new_huge.obj disp_hug.obj \
+		iocheck.obj iocheck2.obj ioresult.obj input.obj output.obj \
+		_readin.obj _readch.obj _writest.obj _writein.obj \
+		_writech.obj _writerl.obj _writebl.obj \
+		wrstlnck.obj bitshift.obj \
+		reset.obj rewrite.obj assign.obj close.obj \
+		errprint.obj _ioreslt.obj _writefl.obj _readrl.obj \
+		strcpy1.obj strcpy2.obj rngchk1.obj rngchk2.obj random.obj \
+		timedate.obj min.obj max.obj
+

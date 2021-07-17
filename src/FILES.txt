@@ -1,0 +1,48 @@
+◎このアーカイブに含まれるファイルについて
+
+  README2.TXT 　アーカイブの内容、著作権等
+  FILES.TXT     このファイル
+  COMPILE.TXT   コンパイル上の注意
+  CAB.PAS 　　　コンパイラドライバ
+  PHASH.PAS     カベソン専用完全ハッシュ関数生成ツール（CBLEX1.PASを生成する）
+  RESERVED.DAT  PHASH.PAS用データ。
+  CAB1.LZH　　　コンパイラ本体（アーカイブしたもの）
+
+【CAB1.LZHの内容】
+
+  CAB1.LNK　　　コンパイラ本体用のリンカレスポンスファイル
+  CAB1.PAS      コンパイラ本体（メイン）
+  CBALLOC.PAS   データアロケーション
+  CBCOM.PAS     共通データ、型定義
+  CBDUMP.PAS    デバッグ用ダンプルーチン
+  CBERROR.PAS   エラー表示
+  CBEVAL.PAS    構文木の作成
+  CBEXGEN1.PAS  式のコード生成（ＣＰＵ独立部）
+  CBEXGEN2.PAS  式のコード生成（ＣＰＵ依存部－１）
+  CBEXGEN3.PAS  式のコード生成（ＣＰＵ依存部－２）
+  CBEXGEN4.PAS  式のコード生成（ＣＰＵ依存部－３）
+  CBEXPR.PAS    式の構文解析
+  CBFLUSH.PAS   後始末
+  CBGEN1.PAS    文のコード生成（ＣＰＵ独立部）
+  CBGEN2.PAS    文のコード生成（ＣＰＵ依存部－１）
+  CBGEN3.PAS    文のコード生成（ＣＰＵ依存部－２）
+  CBGEN4.PAS    文のコード生成（ＣＰＵ依存部－３）
+  CBINIT.PAS    初期化
+  CBLABEL.PAS   アセンブラ用ラベル生成
+  CBLEX.PAS     字句解析
+  CBLEX1.PAS    字句解析で使用する完全ハッシュ関数の初期化（ＰＨＡＳＨで生成）
+  CBLEX2.PAS    字句解析用データの初期化（実際は多のデータの初期化も行う）
+  CBMODUL.PAS   宣言の構文解析
+  CBPROC.PAS    宣言の構文解析の下請で、関数・手続きの構文解析を行う
+  CBSTATE.PAS   文の構文解析
+  CBSTD.PAS     標準手続きの処理
+  CBTABLE.PAS   字句解析の表管理
+  CBTYPE.PAS    型の解析
+  MAKEFILE　　　コンパイラ本体用メイクファイル（ボーランド社のMAKEに準拠）
+
+以上、文責は
+
+徳丸浩／ockeghem
+	htokumar@jun.email.ne.jp
+	QGB01521@niftyserve.or.jp
+	hiroshi_tokumaru@msn.com
