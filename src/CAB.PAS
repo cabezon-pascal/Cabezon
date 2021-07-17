@@ -278,6 +278,39 @@ begin
 	end
 end; { gocab1 }
 
+{
+function getCompilerDriverFolder : DirStr;
+const
+	INDEX_TO_EXECUTING_PROGRAM = 0;
+var
+	compilerDriverFolder : DirStr;
+	compilerDriverName : NameStr;
+	compilerDriverExtension : ExtStr;
+begin
+	FSplit(ParamStr(INDEX_TO_EXECUTING_PROGRAM),
+		compilerDriverFolder,
+		compilerDriverName,
+		compilerDriverExtension);
+	getCompilerDriverFolder := compilerDriverFolder;
+end;
+}
+
+{ Produces smaller code than the one above }
+function getCompilerDriverFolder : DirStr;
+const
+	INDEX_TO_EXECUTING_PROGRAM = 0;
+	INDEX_TO_FIRST_CHAR = 1;
+var
+	compilerDriverFqpn : PathStr;
+	indexToCurrentChar : Byte;
+begin
+	compilerDriverFqpn := ParamStr(INDEX_TO_EXECUTING_PROGRAM);
+	indexToCurrentChar := Length(compilerDriverFqpn);
+	while (indexToCurrentChar > INDEX_TO_FIRST_CHAR) and (compilerDriverFqpn[indexToCurrentChar] <> '\') do
+		Dec(indexToCurrentChar);
+	getCompilerDriverFolder := Copy(compilerDriverFqpn, INDEX_TO_FIRST_CHAR, indexToCurrentChar);
+end;
+
 procedure goLink;
 var
 	cmdLine : paramString;
@@ -287,7 +320,11 @@ begin
 		cmdLine := objects[1] + '.obj';
 		for i := 2 to nObj do
 			cmdLine := cmdLine + ' ' + objects[i] + '.obj';
-		cmdLine := cmdLine + ' clib.lib';
+		cmdLine := cmdLine + ' ' + getCompilerDriverFolder + 'CLIB.LIB';
+(*
+{ Alternative calling convention: }
+		cmdLine := cmdLine + ' -L' + getCompilerDriverFolder + ' -lCLIB';
+*)
 		if debugInfo then
 			cmdLine := cmdLine + ' -M -g'
 		else if map then
@@ -296,7 +333,7 @@ begin
 		cmdLine := objects[1];
 		for i := 2 to nObj do
 			cmdLine := cmdLine + '+' + objects[i];
-		cmdLine := cmdLine + ',,,CLIB';
+		cmdLine := cmdLine + ',,,' + getCompilerDriverFolder + 'CLIB';
 		if debugInfo then
 			cmdLine := cmdLine + '/m/li;'
 		else if map then
