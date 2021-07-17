@@ -1,6 +1,6 @@
 (* file = shortest.pas
  *
- * Short possible program
+ * Shortest possible program
  *
  *)
 program shortestProgram;
