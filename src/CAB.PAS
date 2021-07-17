@@ -1,6 +1,6 @@
 (* file = cab.pas
  *
- * cab.exe : Caveson compiler driver
+ * cab.exe : Cabezon compiler driver
  *
  * Copyright (C) 1990, 93  Ockeghem
  *)
