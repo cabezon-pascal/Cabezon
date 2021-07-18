@@ -2,12 +2,15 @@
 #
 #	'91/03/01  BY Ockeghem
 #
+#	Use, e.g., `make LIBDIR=D:\CABEZON', if `CLIB.LIB' is present in an
+#	other than the current directory.
+#
 .SUFFIXES: .obj .pas	# For Borland MAKE, comment this line
 
 .pas.obj :
 	cab /c /j $<
 
-LINK = LLD
+LINK = LLD -L$(LIBDIR)
 
 cabx.exe : CAB1.obj CBALLOC.obj CBDUMP.obj CBERROR.obj CBEVAL.obj \
 	   CBEXGEN1.obj CBEXGEN2.obj CBEXGEN3.obj CBEXGEN4.obj CBEXPR.obj \
