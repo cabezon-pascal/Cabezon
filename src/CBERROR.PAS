@@ -117,7 +117,7 @@ procedure printErrorPoint;
 begin
 	writeln(Rbuf);
 	putspc(cp - 3, output);
-	writeln('ª');
+	writeln('^');
 	write(fname, '[', LineNo, ']')
 end; { printErrorPoint }
 
