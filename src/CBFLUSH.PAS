@@ -1,11 +1,13 @@
 (* file = cbflush.pas
  *
- * cbinit : カベソンコンパイラ
- *
+ * cbflush : Cabezon compiler
  *
  * Copyright (C) 1990  Ockeghem
  *)
-unit cbflush;interface
+unit cbflush;
+
+interface
+
 uses cbcom;
 
 procedure Flush;
@@ -28,9 +30,9 @@ begin
 	flushCodegen;
 	if errorExist then begin
 		writeln;
-		writeln('警告 : ', nErrors[warnings],
-				'    エラー : ', nErrors[errors],
-				'    致命的エラー : ', nErrors[disasters])
+		writeln('Warnings : ', nErrors[warnings],
+				'    Errors : ', nErrors[errors],
+				'    Fatal errors : ', nErrors[disasters])
 	end;
 	FlushFiles;
 	if errorExist then begin
