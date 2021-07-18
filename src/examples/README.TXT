@@ -1,99 +1,72 @@
-１．カベソン（Cabezon）とは？
-　カベソンは自己記述可能なPascalコンパイラです。MS-DOSまたは、Windows95
-や WindowsNT の DOS 窓で動作します。
+1. What is Cabezon?
+Caveson is a self-describing Pascal compiler. It works in MS-DOS or Windows95 or WindowsNT DOS windows.
 
-　カベソン・コンパイラは１パスのコンパイラで、Pascalのソースを読み込んで
-MASMのアセンブリソースを出力することにより、8086のネイティブ・コードを生
-成します。
-　このバージョンの転載は自由です。但し、事後でも結構ですので、転載の旨メー
-ルを下さい。
-　カベソンに関する要望質問等は、ockeghem まで連絡下さいますようお願い致し
-ます。
-　このアーカイブには、カベソンをとりあえず使ってみるために必要なファイル
-は、すべて含まれています。
+The Caveson compiler is a one-pass compiler that reads the Pascal source and outputs the MASM assembly source to generate 8086 native code. Reprinting this version is free. However, it is fine even after the fact, so please send an email to the effect that it will be reprinted. If you have any questions regarding Caveson, please contact ockeghem. This archive contains all the files you need to get started with Caveson.
 
 
-２．このアーカイブに含まれるファイル
+2. Files contained in this archive
 
-README.TXT      このファイル
-CAB.EXE         コンパイラ・ドライバ
-CAB1.EXE        コンパイラ本体
-CABEZON.ERR     エラーメッセージ
-CABEZON.INI     組込関数の定義集
-CLIB.LIB        ライブラリ
-EXTERNAL.PAS    外部関数・手続きのサンプル
-PRLIST.PAS      サンプルプログラム（リスト処理：new,disposeの使用例）
-QUEEN.PAS       サンプルプログラム（８クイーン）
-TEXTCOPY.PAS    サンプルプログラム（テキストファイルのコピー）
-ADD.ASM         外部関数・手続きのサンプル
-HUGESAMP.PAS    huge 配列のサンプル・プログラム
+README.TXT      This file
+CAB.EXE         Compiler driver
+CAB1.EXE        Compiler body
+CABEZON.ERR     Error message
+CABEZON.INI     Definition collection of built-in functions
+CLIB.LIB        Library
+EXTERNAL.PAS    Sample of external function / procedure
+PRLIST.PAS      Sample program (list processing: example of using new and dispose)
+QUEEN.PAS       Sample program (8 queens)
+TEXTCOPY.PAS    Sample program (copy of text file)
+ADD.ASM         Sample of external function / procedure
+HUGESAMP.PAS    Huge array sample program
 
-３．とりあえず、使ってみるには
+3. For the time being, to try it
 
-（１）準備
-　アーカイブファイルをLHAまたはWinZipなどで解凍して下さい。
-　コンパイルにはMASM／LINKまたは、TASM／TLINK、R86/LLDが必要です。R86/LLD
-は、LSI C-86の試食版に添付していますので、無料で利用できます。
-　これらのプログラムがカレントディレクトリか、PATHで指定されたディレクト
-リにあることを確認して下さい。また、CABEZON.INI と CABEZON.ERR の二つの
-ファイルは、必ず CAB1.EXE と同一のディレクトリに収めて下さい。PATH で指
-定されたディレクトリであれば、どのディレクトリでも構いません。
+(1) Preparation
+Unzip the archive file with LHA or WinZip.
+MASM / LINK, TASM / TLINK, R86 / LLD are required for compilation. R86 / LLD is attached to the tasting version of LSI C-86, so you can use it for free.
+Make sure that these programs are in the current directory or the directory specified in PATH. Also, be sure to put the two files CABEZON.INI and CABEZON.ERR in the same directory as CAB1.EXE. It can be any directory as long as it is specified in the PATH.
 
-【重要】CAB1.EXE, CABEZON.INI, CABEZON.ERR の３ファイルは、同一ディレクト
-　　　　リに格納すること
+[Important] The three files CAB1.EXE, CABEZON.INI, and CABEZON.ERR should be stored in the same directory.
 
-　アセンブラ・リンカとして、TASM／TLINKを使用される場合には、環
-境変数を下記のようにセットしておいて下さい。
+When using TASM / TLINK as an assembler / linker, set the environment variables as shown below.
 
 C:\>SET ASM=TASM 
 C:\>SET LINK=TLINK
 
-  同様に、R86/LLDを使用する場合は、
+  Similarly, when using R86 / LLD,
 
 C:\>SET ASM=R86
 C:\>SET LINK=LLD
 
-などとします。
+And so on.
 
-（２）コンパイル・リンク
-　カベソンには、コンパイラドライバ CAB.EXE が用意されています。
-　簡単にコンパイル・リンクするためには、MS-DOSのプロンプトから、
+(2) Compile link
+Caveson has a compiler driver CAB.EXE. For easy compilation and linking, from the MS-DOS prompt
 
 A>CAB QUEEN
 
-と打込んで下さい。
-　自動的にコンパイラ、アセンブラ、リンカが起動されて、プログラム QUEEN.EXE
-が作成されるはずです。
+Please type in. The compiler, assembler, and linker should be started automatically, and the program QUEEN.EXE should be created.
 
-（３）実行
-　サンプルプログラムの実行は、通常のMS-DOSのプログラムと同じように、
+(3) Execution
+Execution of the sample program is the same as a normal MS-DOS program,
 
 A>QUEEN
 
-と、打込んで下さい。
-　８クイーンのプログラムが起動されて、９２個の解が表示されればＯＫです。
-　もしどうしてもうまくいかないようでしたら、オケゲムまで連絡下さいますよ
-うお願い致します。
+Please type in.
+It is OK if the 8 queens program is started and 92 solutions are displayed.
+If it doesn't work, please contact Ockeghem.
+Thank you.
 
 
-４．著作権・免責など
-　著作権は、徳丸　浩が保有します。
-　先にも述べたように転載は自由ですが、転載した旨のメールをオケゲム宛に下
-さいますようお願いします。
-　また、勝手ながら、このプログラムを使用したことによる結果等については、
-作者は責任を負いかねますので、使用者の責任において利用して下さい。
-　とくに現在のバージョンにはバグが多く含まれているかもしれないことをお断
-りしておきます
+4. Copyright, disclaimer, etc.
+The copyright is owned by Hiroshi Tokumaru.
+As mentioned earlier, reprinting is free, but please send an email to Ockeghem to the effect that it has been reprinted. In addition, the author is not responsible for the results of using this program, so please use it at your own risk. In particular, please note that the current version may contain many bugs.
 
 
-５．謝辞
-　カベソンの開発にあたっては、多くの人達の励まし、助言をいただきました。
-　とくに、日経MIX pascal会議 の nemossan議長をはじめとする多くの方々から、
-有益な助言や暖かい励ましをいただきました。この場を借りてお礼申
-し上げます。
-　これからも、カベソンをよろしくお願い致します。
+5. Acknowledgments
+We received encouragement and advice from many people in the development of Caveson. In particular, we received useful advice and warm encouragement from many people, including Chairman nemossan of the Nikkei MIX pascal conference. I would like to take this moment to say thank you. We look forward to your continued support of Caveson.
 
-徳丸浩／ockeghem
+Hiroshi Tokumaru / ockeghem
 	htokumar@jun.email.ne.jp
 	QGB01521@niftyserve.or.jp
 	hiroshi_tokumaru@msn.com

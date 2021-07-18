@@ -1,104 +1,104 @@
-メンテナンス履歴
+Maintenance history
 
     Ver 0.01    '90/08/22
 
-    ・初期バージョンリリース
+    - Initial version release
 
     Ver 0.02    '90/10/28
 
-        ・case文を実装した
-        ・with文を実装した
-        ・goto文を実装した
-            ・gotoラベルには名前を使用可能
-              （ｅｘ．  goto exitMainLoop; ）
-            ・手続きを抜けるgotoが可能
+        - Implemented a case statement
+        - Implemented with statement
+        - Implemented goto statement
+            - Name can be used for goto label
+              (ex.  goto exitMainLoop; )
+            - It is possible to go to go through the procedure
 
-        ・for～every文を実装した
-        ・for文で、式の型が制御変数と異なる場合でも、エラーとならない
-          というバグを修正した
+        - Implemented for-every statement
+        - In the for statement, no error occurs even if the expression type is different from the control variable.
+            Fixed a bug
 
     Ver 0.03    '91/02/20
 
-        ・手続きnew／disposeを実装した
-        ・text型をサポートする下記の手続きを実装した
+        - Implemented procedure new / dispose
+        - Implemented the following procedure to support text type
 
                 assign, reset, rewrite, close, read, readln, write, writeln,
                 eof
 
-        ・実行時エラーの表示方法を改善した。エラーコードとエラーアドレス
-          を表示するようにした。
-        ・write 手続きで整数値を出力する場合、巾指定がないと、負値のマイ
-          ナスが出力されないというバグを修正した。
-        ・引数のない readln をエラーとしていたのを修正した。
-        ・ラベルの記号の扱いに誤りがあったのを訂正した。ハッシュ表から削
-          除していなかったというもの。
-        ・コンパイラ・ドライバを修正し、コンパイル・アセンブル終了後のア
-          センブリ言語のプログラムを削除するようにした。但し、アセンブル
-          のみの場合には削除しない。
+        - Improved the display method of run-time errors. Error code and error address
+            Was displayed.
+        - When outputting an integer value in the write procedure, if the width is not specified, the negative value My
+            Fixed a bug that eggplant is not output.
+        - Fixed that readln with no argument was an error.
+        - Corrected an error in the handling of label symbols. Removed from hash table
+            It wasn't removed.
+        - Modify the compiler driver and assemble after compiling and assembling.
+            Changed to delete the assembly language program. However, assemble
+            If only, do not delete.
 
     Ver 0.04    '91/03/17
 
-        ・文字列の連結演算子 '+'、組込手続きを実装した。
-        ・実行時のパラメータを取得する組込関数を実装した。
-        ・記述言語を、従来のTurbo Pascal Ver5.5 からカベソン自身に変更した。
+        - Implemented the string concatenation operator'+' and the embedding procedure.
+        - Implemented a built-in function that acquires run-time parameters.
+        - The description language has been changed from the conventional Turbo Pascal Ver5.5 to Caveson itself.
 
     Ver 0.05    '91/03/21
 
-        ・コード生成部を改良した。
-        ・ライブラリの一部をアセンブラで書き直した。
-        ・構造型の関数を定義した際に、関数の戻り値を指す記号が開放されな
-          いというバグを修正した。
-        ・定数演算の畳み込み機能を追加した。これにより、a[3, 4] といった
-          配列参照で添字計算をしなくてすむようにした。
-        ・起動時に一旦ヒープ領域を開放するコードをスタートアップルーチン
-          に追加した。従来は link の /cp:1 オプションを使用していたため、
-          MS-LINK 以外のリンカでヒープを使用できないという欠点をなくした。
+        - Improved the code generator.
+        - Part of the library was rewritten with assembler.
+          - When defining a structural type function, the symbol indicating the return value of the function is not released.
+              Fixed a bug.
+          - Added a convolution function for constant calculation. As a result, such as a [3, 4]
+              You don't have to do subscript calculations with array references.
+          - Startup routine with code that temporarily releases the heap area at startup
+              Added to. Previously it used the link's / cp: 1 option, so
+              Eliminates the drawback of not being able to use the heap with linkers other than MS-LINK.
 
     Ver 0.06    '91/11/19
 
-        ・式のコード生成部を改良した。
-        ・case 文の実装として、バイナリサーチのインライン展開を追加した。
-          この方法は、suto さんから教えていただいたもの。
-        ・部分範囲型の範囲チェックオプションを追加した。
-        ・LSI C-86 付属のアセンブラＲ８６に対応した。
+         - Improved the code generator of the expression.
+         - Added inline expansion of binary search as an implementation of case statement.
+             This method was taught by suto.
+         - Added a range check option for partial range type.
+         - Compatible with the assembler R86 attached to LSI C-86.
 
     Ver 0.07    '92/06/10
 
-        ・引数のコードを改良した。変数を直接 push するようにした。
-        ・論理型の定数式の畳み込みをサポートした。
-        ・for 文のコードを改良して、定数回のループを効率よく実行できるよ
-          うにした。
-        ・比較演算子を代入文などの中で用いる場合のバグを修正した。
-        ・interface 節で宣言された手続きを external 宣言した場合のバグを
-          修正した。
-        ・大域的な goto 文を使えるようにした。元々サポートしていた機能だ
-          が、Ver 0.06 のバグで使用できなくなっていた。
-        ・ドキュメントのバグを一部修正した。これに伴い、テキストフォーマッ
-          タを FPLF に変更した。
+         - Improved the argument code. Changed to push variables directly.
+         - Supported convolution of logical constant expressions.
+         - You can improve the code of the for statement to efficiently execute a constant number of loops.
+             Sea urchin.
+         - Fixed a bug when using comparison operators in assignment statements.
+         - Bug when declaring the procedure declared in the interface clause external
+             Fixed.
+         - Enabled global goto statement. It's a feature that was originally supported
+             However, it could not be used due to a bug in Ver 0.06.
+         - Fixed some bugs in the document. Along with this, the text format
+             Changed data to FPLF.
 
     Ver 0.08    '93/01/04
 
-        ・huge 配列をサポートした。
-        ・識別子として日本語を使用できるようにした。但し、日本語識別子を
-          英数字に変換せずそのままアセンブリ・コードにしているので、アセ
-          ンブラにも日本語識別子の使えるものを利用しないと、日本語を使っ
-          たプログラミングはできない。
-        ・with 文のコードを改良した。
-        ・エラーメッセージをコンパイラから分離して、別ファイル（cabezon.err）
-          に置くようにした。
-        ・組込み関数・手続きの宣言をコンパイラから分離して、別ファイル
-          （cabezon.ini）に置くようにした。
-        ・string 型定義において３２Ｋバイトを越えた時のエラーチェックを
-          行うようにした。
-        ・組込関数 paramStr において、引数０を与えた時に実行パスを返すよ
-          うにした。
-        ・組込関数 bitshift, cpos, min, max、組込手続き gettime, getdate
-          を追加した。なお、gettime、getdate の手続きを作られたのは maquiwo
-          氏であり、氏の快諾を得て標準ライブラリとして追加させていただい
-          た。記して感謝の意を表する。
+        - Supported huge arrays.
+        - Japanese can be used as an identifier. However, the Japanese identifier
+            Since it is made into assembly code as it is without being converted to alphanumeric characters,
+            If you don't use the one that can use Japanese identifier for the umbrella, you will use Japanese.
+            No programming is possible.
+        - Improved the code of the with statement.
+        - Separate the error message from the compiler and separate file (cabezon.err)
+            I tried to put it in.
+        - Separate the declarations of built-in functions and procedures from the compiler and file them in a separate file.
+            I put it in (cabezon.ini).
+        - Error check when the string type definition exceeds 32 Kbytes
+            I tried to do it.
+        - In the built-in function paramStr, the execution path is returned when the argument 0 is given.
+            Sea urchin.
+        - Embedded functions bitshift, cpos, min, max, embedded procedure gettime, getdate
+            Was added. The procedure for gettime and getdate was created by maquiwo.
+            He is, and with his consent, I will add it as a standard library.
+            It was. I would like to express my gratitude.
 
 
-徳丸浩／ockeghem
+Hiroshi Tokumaru / ockeghem
 	htokumar@jun.email.ne.jp
 	QGB01521@niftyserve.or.jp
 	hiroshi_tokumaru@msn.com

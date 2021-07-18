@@ -1,36 +1,36 @@
-１．カベソン（Cabezon）とは？
-　カベソンは自己記述可能Pascalコンパイラです。
-　カベソン・コンパイラは１パスのコンパイラで、Pascalのソースを読み込んで
-MASMのアセンブリソースを出力することにより、8086のネイティブ・コードを生
-成します。
-　カベソンに関する要望質問等は、ockeghem まで連絡下さいますようお願い致
-します。
+1. What is Cabezon?
+Caveson is a self-describable Pascal compiler.
+The Caveson compiler is a one-pass compiler that reads Pascal source.
+Generate 8086 native code by outputting MASM assembly source
+It will be done.
+If you have any questions regarding Caveson, please contact ockeghem.
+To do.
 
 
-２．このアーカイブに含まれるファイル
+2. Files contained in this archive
 
-  README2.TXT 　このファイル
-  FILES.TXT     アーカイブの内容一覧
-  COMPILE.TXT   コンパイル上の注意
-  CAB.PAS 　　　コンパイラドライバ
-  PHASH.PAS     カベソン専用完全ハッシュ関数生成ツール（CBLEX1.PASを生成する）
-  RESERVED.DAT  PHASH.PAS用データ。
-  CAB1.ZIP　　　コンパイラ本体（アーカイブしたもの）
+  README2.TXT   This file
+  FILES.TXT     List of archive contents
+  COMPILE.TXT   Compilation notes
+  CAB.PAS       Compiler driver
+  PHASH.PAS     Full hash function generation tool for Caveson (generate CBLEX1.PAS)
+  RESERVED.DAT  Data for PHASH.PAS.
+  CAB1.ZIP      Compiler body (archived)
 
-  CAB1.LZHの内容については FILES.TXT を参照して下さい
-
-
-３．著作権・免責など
-　著作権は、オケゲムが保有します。
-　先にも述べたように転載は自由ですが、転載した旨のメールをオケゲム宛に下
-さいますようお願いします。
-　また、勝手ながら、このプログラムを使用したことによる結果等については、
-作者は責任を負いかねますので、使用者の責任において利用して下さい。
-　とくに現在のバージョンにはバグが多く含まれているかもしれないことをお断
-りしておきます
+  CAB1.LZH      See FILES.TXT for the contents of
 
 
-徳丸浩／ockeghem
+3. Copyright, disclaimer, etc.
+The copyright is owned by Ockeghem.
+As mentioned earlier, reprinting is free, but send an email to Ockeghem to the effect that it has been reprinted.
+Thank you for your cooperation.
+Also, regarding the results of using this program, etc.
+The author is not responsible, so please use at your own risk.
+In particular, the current version may contain many bugs.
+I'll leave it
+
+
+Hiroshi Tokumaru / ockeghem
 	htokumar@jun.email.ne.jp
 	QGB01521@niftyserve.or.jp
 	hiroshi_tokumaru@msn.com

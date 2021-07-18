@@ -1,331 +1,330 @@
-Cabezon Ver0.08  “à•”d—l‘
+Cabezon Ver0.08  Internal specifications
 
-Copyright (C) 1990, 93 “¿ŠÛ@_
+Copyright (C) 1990, 93 Hiroshi Tokumaru
 
-‚PDƒƒ‚ƒŠƒ‚ƒfƒ‹
-  ƒJƒxƒ\ƒ“‚Íƒ‰[ƒWƒ‚ƒfƒ‹‚ÌƒR[ƒh‚ğ¶¬‚µ‚Ü‚·B
-  ƒR[ƒh—Ìˆæ‚Í 1M ƒoƒCƒg‚Ü‚Å‚Å‚·‚ªA‚P‚Â‚ÌƒvƒƒOƒ‰ƒ€‚Ü‚½‚Íƒ†ƒjƒbƒg‚ÌƒR[
-ƒh—Ìˆæ‚ÌŒÀŠE‚Í 64K ƒoƒCƒg‚Å‚·B•¶š—ñ’è”‚ÍƒR[ƒh—Ìˆæ‚Éæ‚ç‚ê‚Ü‚·‚©‚çA
-•¶š—ñ‚ğ‚½‚­‚³‚ñ•\¦‚·‚éƒvƒƒOƒ‰ƒ€iƒeƒLƒXƒgEƒAƒhƒxƒ“ƒ`ƒƒ[ƒQ[ƒ€‚È‚Çj
-‚É‚àg—p‚Å‚«‚é‚Í‚¸‚Å‚·B
-  Ã“Iƒf[ƒ^‚Í 64K ƒoƒCƒg‚Ü‚Å‚Å‚·BƒXƒ^ƒbƒN—Ìˆæ‚ÍAƒfƒtƒHƒ‹ƒg‚Å‚Í 16K
-ƒoƒCƒg‚Å‚·‚ªAƒŠƒ“ƒN‚ÌƒIƒvƒVƒ‡ƒ“‚© EXEMOD ‚ÅA64K ƒoƒCƒg‚É‚Ü‚ÅŠg’£‰Â”\
-‚Å‚·B
-  ‚Ü‚½Ahuge ”z—ñ‚Í‚P—v‘f‚ÌƒTƒCƒY‚ª 32K ‚Ü‚ÅA—v‘f”‚ª 32767 ‚Ü‚Å
-‚Æ‚¢‚¤§ŒÀ‚ğ–‚½‚¹‚ÎAMS-DOS ‚ÌƒRƒ“ƒxƒ“ƒVƒ‡ƒiƒ‹Eƒƒ‚ƒŠˆê”t‚Ü‚Åg‚¦
-‚Ü‚·B
-  ƒ|ƒCƒ“ƒ^‚Í‚R‚Qƒrƒbƒg‚Å‚·‚Ì‚ÅAƒq[ƒv—Ìˆæ‚Í 1M ƒoƒCƒg‚Ü‚Å‚Å‚·B
+1. Memory model
+   Caveson generates the code for the large model.
+   The code area is up to 1 Mbyte, but the code for one program or unit
+The space limit is 64 Kbytes. Since the string constant is taken in the code area,
+A program that displays a lot of character strings (text, adventure games, etc.)
+Should also be usable.
+   Static data can be up to 64K bytes. Stack area is 16K by default
+Bytes, but can be expanded to 64K bytes with link-time options or EXEMOD
+is.
+   Also, in the huge array, the size of one element is up to 32K, and the number of elements is up to 32767.
+If you meet the limitation, you can use up to the full conventional memory of MS-DOS.
+I will.
+   Since the pointer is 32 bits, the heap area is up to 1 Mbyte.
 
-y‚Ü‚Æ‚ßz
+[Summary]
 
-  ƒR[ƒh        1M ƒoƒCƒg‚Ü‚Å
-  Ã“Iƒf[ƒ^    64KƒoƒCƒg‚Ü‚Å
-  huge ”z—ñ     1M ƒoƒCƒg‚Ü‚Åi‚P—v‘f 32K byteA—v‘f” 32767 ‚Ü‚Åj
-  ƒXƒ^ƒbƒN      64KƒoƒCƒg‚Ü‚Å
-  ƒq[ƒv        1M ƒoƒCƒg‚Ü‚Å
+   Code         up to 1 Mbyte
+   Static data  up to 64K bytes
+   huge array   up to 1M bytes (up to 32K bytes per element, up to 32767 elements)
+   Stack        up to 64K bytes
+   Heap         up to 1 Mbyte
 
 
-‚QDƒƒ‚ƒŠƒ}ƒbƒv
+2. Memory map
 
-ª’áˆÊƒAƒhƒŒƒX  +-------------------------------+
-        CS ---->|   sfile_TEXT ƒNƒ‰ƒX  'CODE'   |       Šesfile_TEXT‚ª
-                |                               |       64KƒoƒCƒg‚Ü‚Å
-                |                               |       'CODE'¸×½‘S‘Ì‚Å‚Í
-                |                               |       1M ƒoƒCƒg‚Ü‚ÅB
+ ^ Low address  +-------------------------------+
+        CS ---->|   sfile_TEXT class  'CODE'    |       Each sfile_TEXT
+                |                               |       Up to 64K bytes
+                |                               |       In the whole 'CODE' class
+                |                               |       Up to 1 Mbyte.
                 |                               |
                 +-------------------------------+
-        DS ---->|   _DATA ƒNƒ‰ƒX  'DATA'        |       _DATA + _BSS
-                |         ‰Šú‰»ƒf[ƒ^          |       = dgroup
-                |                               |       64KƒoƒCƒg‚Ü‚Å
+        DS ---->|   _DATA class  'DATA'         |       _DATA + _BSS
+                |         Initialization data   |       = dgroup
+                |                               |       Up to 64K bytes
                 +-------------------------------+
-                |   _BSS  ƒNƒ‰ƒX  'DATA'        |
-                |         ‰Šú‰»‚³‚ê‚È‚¢ƒf[ƒ^  |
+                |   _BSS  class  'DATA'         |
+                |         Uninitialized data    |
                 |                               |
                 +-------------------------------+
-        ES ---->|   sfile#_FAR ƒNƒ‰ƒX  'EXTRA'  |       ‚P”z—ñ‚ğ‚R‚Q‚jƒoƒCƒg
-                |                               |       ’PˆÊ‚É•ªŠ„‚·‚éB
-                |                               |       ‚P‚Â‚ÌƒZƒOƒƒ“ƒg‚ğ
-                |                               |       ‚R‚Q‚jƒoƒCƒgˆÈ‰º‚Æ‚µ
-                |                               |       ‚½‚Ì‚ÍA‚’‚W‚U‚Ì§ŒÀ
+        ES ---->|   sfile#_FAR class  'EXTRA'   |       32K bytes per array
+                |                               |       Divide into units.
+                |                               |       One segment
+                |                               |       32K bytes or less
+                |                               |       The reason is the limitation of r86
                 +-------------------------------+
-        SS ---->|   _STACK ƒNƒ‰ƒX 'STACK'       |       _STACK
-                |         ƒXƒ^ƒbƒN—Ìˆæ          |       64KƒoƒCƒg‚Ü‚Å
+        SS ---->|   _STACK class 'STACK'        |       _STACK
+                |         Stack area            |       Up to 64K bytes
                 |                               |
         SP ---->|                               |
                 |                               |
-  Å‰‚ÌSP ---->+-------------------------------+
-                |                               |       c‚è‚Ìƒƒ‚ƒŠ‘S•”
-                |         ƒq[ƒv                |       Å‘å 1M ƒoƒCƒg
+  first SP ---->+-------------------------------+
+                |                               |       All remaining memory
+                |         heap                  |       Up to 1 Mbyte
                 |                               |
                 |                               |
-«‚ˆÊƒAƒhƒŒƒX  +-------------------------------+
+? High address  +-------------------------------+
 
-y’ˆÓz
-  ã‹L‚Ì•\‚ÉuÅ‘å 1M ƒoƒCƒgv‚Æ‚ ‚é‚Ì‚ÍA‚ ‚­‚Ü‚Å 8086CPU ‚Ì—˜_“I
-ŒÀŠE‚Å‚·BÀÛ‚É‚ÍAOS ‚Ì—Ìˆæ‚Æ‚©AVRAM‚Ì‚æ‚¤‚ÉAƒ†[ƒU—Ìˆæ‚Æ‚µ‚Äg
-—p‚Å‚«‚È‚¢•”•ª‚ª‚ ‚èA‚³‚ç‚ÉAFEP ‚È‚Ç‚Ìí’“ƒvƒƒOƒ‰ƒ€‚ª‚ ‚é‚±‚Æ‚ğl—¶
-‚·‚é‚ÆAÀÛ‚É‚ÍÅ‘å 500K ƒoƒCƒg’ö“x‚ªŒÀŠE‚É‚È‚é‚Æl‚¦‚Ä‰º‚³‚¢B
+[Note]
+   The "maximum 1 Mbyte" in the above table is the theoretical 8086 CPU.
+It's the limit. Actually, it is used as an OS area or a user area like VRAM.
+Consider that there are some parts that cannot be used and that there are resident programs such as FEP.
+Then, think that the maximum is actually about 500K bytes.
 
-‚RDƒf[ƒ^‚Ì“à•”\‘¢
+3. Internal structure of data
 
-‚RD‚P  •¶šŒ^
-  •¶šŒ^‚Æ‚»‚Ì•”•ª”ÍˆÍŒ^‚ÍA‚PƒoƒCƒg‚Ì•„†‚È‚µ”‚Æ‚µ‚Äƒƒ‚ƒŠ‚ÉŠi”[‚³‚ê‚Ü
-‚·B
+3.1 Character type
+   Character types and their subrange types are stored in memory as 1-byte unsigned numbers.
+Su.
 
-‚RD‚Q  ˜_—Œ^
-  ˜_—Œ^ (boolean) ‚Í‚PƒoƒCƒg‚ÅAˆÈ‰º‚Ì—l‚È’è‹`Ï‚İ‚Ì—ñ‹“Œ^‚Æl‚¦‚ç‚ê‚Ü
-‚·B
+3.2 Logical type
+   A boolean is 1 byte and can be considered a predefined enum as follows:
+Su.
 
         boolean = (false, true)
 
-‚RD‚R  —ñ‹“Œ^
-  —ñ‹“‚Ì”‚ª‚Q‚T‚UˆÈ‰º‚Ìê‡‚Í•„†‚È‚µƒoƒCƒgA‚Q‚T‚VˆÈã‚Ìê‡‚Í‚QƒoƒCƒg
-‚Ì•„†•t‚«”‚Æ‚µ‚Äˆµ‚í‚ê‚Ü‚·BŒ»ó‚ÌƒJƒxƒ\ƒ“‚É‚ÍA‚QƒoƒCƒg•„†‚È‚µ”‚ğˆµ
-‚¤‹@”\‚Í‚ ‚è‚Ü‚¹‚ñB
+3.3 Enumeration type
+   Unsigned bytes if the number of enumerations is 256 or less, 2 bytes if the number is 257 or more
+It is treated as a signed number of. The current Caveson handles 2-byte unsigned numbers
+There is no function.
 
-‚RD‚S  ®”Œ^
-  ®”Œ^‚Æ‚»‚Ì•”•ª”ÍˆÍŒ^‚ÍA’l‚Ì”ÍˆÍ‚É‚æ‚Á‚Ä‰º‹L‚Ì‚Qí—Ş‚ÌŠi”[‚Ì‚³‚ê•û‚ğ
-‚µ‚Ü‚·B
+3.4 Integer type
+   The integer type and its subrange type are stored in the following two types depending on the range of values.
+To do.
 
-i‚Pj0..255 ‚Ì”ÍˆÍ‚Éû‚éê‡
-  •„†‚È‚µƒoƒCƒg‚Æ‚µ‚ÄŠi”[‚³‚ê‚Ü‚·B
-i‚Qj‚»‚êˆÈŠO‚Ìê‡
-  •„†•t‚«‚P‚Uƒrƒbƒg®”‚Æ‚µ‚ÄŠi”[‚³‚ê‚Ü‚·B
+(1) When it falls within the range of 0..255
+   Stored as unsigned bytes.
+(2) In other cases
+   It is stored as a signed 16-bit integer.
 
-‚RD‚T  À”
-  À” (real) ‚ÌƒtƒH[ƒ}ƒbƒg‚ÍA8087‚Ì’·Œê’·ƒtƒH[ƒ}ƒbƒg‚Å 64 ƒrƒbƒg
-i‚WƒoƒCƒgj‚Ì‘å‚«‚³‚ğè‚ß‚Ü‚·B‚±‚ê‚ÍIEEE‚Ì”{¸“xƒtƒH[ƒ}ƒbƒg‚Æ‚Ù‚Ú
-“¯‚¶‚à‚Ì‚¾‚»‚¤‚Å‚·B
+3.5 real numbers
+   The real format is the 8087 long word format, 64-bit.
+It occupies the size of (8 bytes). This is almost the same as the IEEE double precision format
+It seems to be the same.
 
-‚RD‚U  ƒ|ƒCƒ“ƒ^
-  ƒ|ƒCƒ“ƒ^‚ÍƒZƒOƒƒ“ƒg{ƒIƒtƒZƒbƒg‚Ì‚R‚Qƒrƒbƒg‚Å‚·Bƒƒ‚ƒŠã‚Å‚ÍAƒIƒtƒZƒb
-ƒg‚ª‰ºˆÊƒ[ƒhAƒZƒOƒƒ“ƒg‚ªãˆÊƒ[ƒh‚ğè‚ß‚Ü‚·B
+3.6 pointer
+   The pointer is 32 bits of segment + offset. On memory, offset
+The lower word is the lower word, and the segment is the upper word.
 
-‚RD‚V  •¶š—ñ
-  •¶š—ñ‚ÍA•¶š—ñ‚ÌÅ‘å’·{‚QƒoƒCƒg‚ğè‚ß‚Ü‚·B•¶š—ñ‚Ì‚Pƒ[ƒhiƒoƒCƒg
-‚Å‚Í‚È‚¢j‚É‚ÍAŒ»İ‚Ì•¶š—ñ’·‚ğ•\‚·”‚ªA•„†•t‚«”‚Æ‚µ‚ÄŠi”[‚³‚ê‚Ä‚¢‚Ü
-‚·B
-  •¶š—ñ•Ï”‚ÌÅ‘å’·‚Í–ñ 32K ƒoƒCƒg‚Å‚·B‚±‚ê‚ÍA•¶š—ñ‚Ì’·‚³‚ğ•„†•t‚«
-”‚Å•Û‚µ‚Ä‚¢‚é‚±‚Æ‚É‚æ‚è‚Ü‚·B
+3.7 string
+   The character string occupies the maximum length of the character string + 2 bytes. 1 word of string (bytes
+Is not) contains a number representing the current string length as a signed number.
+Su.
+   The maximum length of a string variable is approximately 32K bytes. It signs the length of the string
+It depends on holding in numbers.
 
-‚RD‚W  ”z—ñ
-  ”z—ñ‚Í—v‘fŒ^‚Ì•Ï”‚ª•À‚ñ‚¾‚à‚Ì‚Æ‚È‚è‚Ü‚·B
+3.8 array
+   An array is an array of element type variables.
 
-‚RD‚WD‚P  ‘½ŸŒ³”z—ñ
-  ‘½ŸŒ³”z—ñ‚ÍA‰E‘¤‚ÌŸŒ³‚ªæ‚É•Ï‚è‚Ü‚·B
+3.8.1 Multidimensional array
+   In a multidimensional array, the right dimension changes first.
 
-y—áz
+[Example]
 
-        array[1..3, 1..2] ‚Ìê‡
+        array[1..3, 1..2] in the case of
 
         +-------+-------+-------+-------+-------+-------+
         | [1,1] | [1,2] | [2,1] | [2,2] | [3,1] | [3,2] |
         +-------+-------+-------+-------+-------+-------+
-        ©’áˆÊƒAƒhƒŒƒX                     ‚ˆÊƒAƒhƒŒƒX¨
+        < Low address                      High address >
 
-‚RD‚WD‚Q  huge ”z—ñ
-  huge ”z—ñ‚Í64KƒoƒCƒg‚ğ‰z‚¦‚é—Ìˆæ‚ğƒAƒNƒZƒX‚·‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·Bhuge
-”z—ñ‚ÌƒCƒ“ƒfƒbƒNƒXŒvZ‚É‚¨‚¢‚ÄA‘æˆê‚Ì“Yš‚ÍƒZƒOƒƒ“ƒgƒAƒhƒŒƒX‚ÌŒvZ‚É‚æ
-‚ès‚í‚ê‚Ü‚·B‚±‚Ì‚½‚ßA“YšŒvZ‚ÌÛ‚É‚ÍAhuge ”z—ñ‚Ì—v‘fŒ^‚Íƒpƒ‰ƒOƒ‰ƒt
-i16 ƒoƒCƒgj’PˆÊ‚ÉØ‚èã‚°‚ç‚ê‚Ü‚·B
+3.8.2 huge array
+   A huge array can access more than 64K bytes. huge
+In array index calculation, the first subscript is the calculation of segment address
+Will be done. Therefore, when calculating subscripts, the element type of the huge array is a paragraph.
+It is rounded up to the nearest (16 bytes).
 
         var
             a : huge array[1..10000, 1..30] of char;
 
-  ‚±‚Ì”z—ñ‚Ì—v‘fŒ^‚Í array[1..30] of chari30 ƒoƒCƒgj‚¾‚ªA16 ƒoƒCƒg’PˆÊ
-‚ÉØ‚èã‚°‚ÄA‚R‚QƒoƒCƒg‚Æ‚µ‚Ä“YšŒvZ‚³‚ê‚éB
+   The element type of this array is array [1..30] of char (30 bytes), but in 16-byte units
+It is rounded up to 32 bytes and subscripted.
 
-‚RD‚X  ƒŒƒR[ƒhŒ^
-  ƒŒƒR[ƒh‚ÌŠeƒtƒB[ƒ‹ƒh‚ÍAƒtƒB[ƒ‹ƒh‚ÌŒ^‚Ì‚Â‹«ŠE’l‚É‡‚í‚¹‚Ä”z’u‚³‚ê
-‚Ü‚·BŒ^‚Ì‹«ŠE’l‚ÍAŸ‚Ì‚æ‚¤‚É‚µ‚Ä’è‚ß‚Ü‚·B
+3.9 record type
+   Each field of the record is arranged according to the boundary value of the field type.
+I will. The type boundary value is defined as follows.
 
-        Œ^‚Ìí—Ş                      b‹«ŠE‡‚í‚¹‚Ì’PˆÊ
-        |||||||||||||||{||||||||||||||
-        ‚PƒoƒCƒg‚ÌŠî’êŒ^              b‚PƒoƒCƒg
-        ®”Œ^AÀ”Œ^Aƒ|ƒCƒ“ƒ^Œ^    b‚QƒoƒCƒg
-        \‘¢Œ^i‚“‚”‚’‚‰‚‚‡‚ğœ‚­j  b—v‘fŒ^‚Ì‹«ŠE’l‚ÌÅ‘å”
-        ‚“‚”‚’‚‰‚‚‡Œ^                b‚“‚”‚’‚‰‚‚‡‚Ì—v‘fŒ^‚Ì‹«ŠE’l
+        Type of type                         | Boundary alignment unit
+        ------------------------------------ + ----------------------------------------------
+        1-byte base type                     | 1 byte
+        Integer type, real number type,      |
+          pointer type                       | 2 bytes
+        Structural type (excluding strings)  | Maximum number of element type boundary values
+        string type                          | String element type boundary value
 
-y—áz
+[Example]
 
         record
-            a : boolean;    a‚ÌƒIƒtƒZƒbƒg‚Í‚O
-            b : integer     b‚ÌƒIƒtƒZƒbƒg‚Í‹«ŠE‡‚í‚¹‚ÌŒ‹‰ÊA‚Q‚Æ‚È‚é
+            a : boolean;    The offset of a is 0
+            b : integer     The offset of b is 2 as a result of border alignment.
         end;
 
-y’z
-  string[n] of char ‚Ì‹«ŠE’l‚Í‚P‚Æ‚È‚è‚Ü‚·B
+[Note]
+  string[n] of char The boundary value of is 1.
 
-  ƒpƒbƒNƒhƒŒƒR[ƒh‚ÍƒTƒ|[ƒg‚µ‚Ä‚¢‚Ü‚¹‚ñB
-
-
-‚SDƒXƒ^ƒbƒNƒtƒŒ[ƒ€
-
-‚SD‚P  è‘±‚«‚ÌŒÄoè‡
-  è‘±‚«‚âŠÖ”‚ÍAŸ‚Ìè‡‚ÅŒÄo‚³‚ê‚Ü‚·B
-
-‚jŠÖ”‚Ì–ß‚è’l‚ÌƒAƒhƒŒƒX‚ğƒXƒ^ƒbƒN‚ÉÏ‚Şi\‘¢Œ^‚ğ•Ô‚·ŠÖ”‚Ìê‡‚Ì‚İj
-‚‚jˆø”‚Ì’lA‚Ü‚½‚ÍAƒAƒhƒŒƒX‚ğƒXƒ^ƒbƒN‚ÉÏ‚Ş
-‚ƒjƒXƒ^ƒeƒBƒbƒNEƒŠƒ“ƒN‚Ì’l‚ğƒXƒ^ƒbƒN‚ÉÏ‚Ş
-‚„j–Ú“I‚ÌŠÖ”Eè‘±‚«‚ğ‚ƒ‚‚Œ‚Œ‚·‚éB
-
-  ˆê•ûAŒÄo‚³‚ê‚½è‘±‚«‘¤‚Å‚ÍAƒXƒ^ƒbƒNƒtƒŒ[ƒ€‚ğˆÛ‚·‚é‚½‚ßA“üŒû‚Æo
-Œû‚ÅŸ‚Ì‚æ‚¤‚ÈƒR[ƒh‚ğÀs‚µ‚Ü‚·B
-
-|“üŒû|
-
-        push    bp              ; bp = ƒ_ƒCƒiƒ~ƒbƒNEƒŠƒ“ƒN‚ğ•Û‘¶
-        mov     bp, sp          ; V‚½‚ÈƒXƒ^ƒbƒNƒtƒŒ[ƒ€‚ğì¬‚·‚é
-        sub     sp, ’è”        ; ƒ[ƒJƒ‹•Ï”‚Ì—Ìˆæ‚ğì¬‚·‚é
-
-|oŒû|
-
-        mov     sp, bp          ; ƒ[ƒJƒ‹•Ï”—Ìˆæ‚ğô‚Ş
-        pop     bp              ; ƒXƒ^ƒbƒNƒtƒŒ[ƒ€‚ÌÁ‹
-        ret     ƒpƒ‰ƒ[ƒ^ƒTƒCƒY{ƒXƒ^ƒeƒBƒbƒNƒŠƒ“ƒN‚Ì—Ìˆæ
-                                ; ˆø”‚ÆƒXƒ^ƒeƒBƒbƒNƒŠƒ“ƒN‚Ì‰ñû
-
-y’ˆÓz
-
-i‚PjƒXƒ^ƒeƒBƒbƒNEƒŠƒ“ƒN‚É‚Â‚¢‚Ä
-  ƒXƒ^ƒeƒBƒbƒNEƒŠƒ“ƒN‚Æ‚ÍAƒlƒXƒg‚³‚ê‚½è‘±‚«‚ªA‚æ‚èŠO‘¤‚Ìè‘±‚«‚Ì•Ï”
-‚ğƒAƒNƒZƒX‚·‚é‚½‚ß‚ÉAƒXƒ^ƒbƒNƒtƒŒ[ƒ€‚ÌƒAƒhƒŒƒX‚ğƒŠƒXƒg‚Æ‚µ‚Ä‚Â‚È‚¢‚¾‚à
-‚Ì‚Å‚·B
-  ‚½‚¾‚µAÅ‚àŠO‘¤‚Å’è‹`‚³‚ê‚½è‘±‚«‚É‚Æ‚Á‚Ä‚ÍA‚æ‚èŠO‘¤‚ÌƒXƒR[ƒv‚Ì•Ï”
-‚ÍÃ“I•Ï”‚Ì‚İ‚Å‚ ‚èAƒXƒ^ƒbƒNƒtƒŒ[ƒ€‚ğ•K—v‚Æ‚µ‚Ü‚¹‚ñB‚µ‚½‚ª‚Á‚ÄAÅ‚à
-ŠO‘¤‚Å’è‹`‚³‚ê‚½è‘±‚«‚ğƒR[ƒ‹‚·‚éÛ‚É‚ÍAƒXƒ^ƒbƒNƒtƒŒ[ƒ€‚ÌƒvƒbƒVƒ…‚ğs
-‚¢‚Ü‚¹‚ñB
-  “¯—l‚ÉAÅ‚àŠO‘¤‚Å’è‹`‚³‚ê‚½è‘±‚«‚©‚çƒŠƒ^[ƒ“‚·‚éê‡‚ÍAˆø”‚Ì—Ìˆæ‚Ì
-‚İÁ‹‚·‚é‚±‚Æ‚É‚È‚è‚Ü‚·B
-
-i‚Qj\‘¢Œ^‚ğ•Ô‚·ŠÖ”‚Ì–ß‚è’l‚É‚Â‚¢‚Ä
-  ƒJƒxƒ\ƒ“‚É‚ÍA\‘¢Œ^‚Ì•Ï”‚ğ®‚Æ‚µ‚Äˆµ‚¤‹@”\‚ª‚ ‚è‚Ü‚·B
-  \‘¢Œ^‚ÌƒIƒuƒWƒFƒNƒg‚ÍƒŒƒWƒXƒ^‚ÉŠi”[‚Å‚«‚È‚¢‚Ì‚ÅA‚»‚Ì‚©‚í‚è‚ÉA‚»‚ÌƒA
-ƒhƒŒƒX‚ğƒXƒ^ƒbƒN‚ÉƒvƒbƒVƒ…‚·‚é‚Æ‚¢‚¤ƒ‹[ƒ‹‚ğÌ—p‚µ‚Ä‚¢‚Ü‚·B
-  \‘¢Œ^‚ğ•Ô‚·ŠÖ”iˆÈ‰ºA\‘¢Œ^ŠÖ”‚Æ‚æ‚Ñ‚Ü‚·j‚ğƒR[ƒ‹‚·‚éÛ‚ÍAŒÄo‘¤
-‚Å\‘¢Œ^‚Ì–ß‚è’l‚Ì—Ìˆæ‚ğŠm•Û‚µ‚ÄA‚»‚ÌƒAƒhƒŒƒX‚ğƒvƒbƒVƒ…‚µ‚Ü‚·B‚±‚Ì—Ìˆæ
-‚ÍAŒ»ó‚ÌƒJƒxƒ\ƒ“ƒRƒ“ƒpƒCƒ‰‚Å‚ÍAƒXƒ^ƒbƒNã‚Éæ‚Á‚Ä‚¢‚Ü‚·B
-  ŒÄo‚³‚ê‚½ŠÖ”‘¤‚Å‚ÍA‚»‚ÌƒAƒhƒŒƒX‚ÉAŒ‹‰Ê‚Ì’l‚ğŠi”[‚µ‚ÄAƒŠƒ^[ƒ“‚·‚é
-‚±‚Æ‚É‚È‚è‚Ü‚·‚ªA‚±‚ÌÛ‚ÉAŒ‹‰Ê‚ğ¦‚·ƒAƒhƒŒƒX‚ÍŠÖ”‘¤‚Å‚Í”‚ª‚µ‚Ü‚¹‚ñB
-‚È‚º‚È‚çAŒ‹‰Ê‚ğ¦‚·ƒAƒhƒŒƒX‚ªƒXƒ^ƒbƒNã‚Éc‚Á‚Ä‚¢‚é‚±‚Æ‚É‚æ‚èAŒ‹‰Ê‚Æ‚µ
-‚ÄA\‘¢Œ^‚ÌƒIƒuƒWƒFƒNƒg‚ÌƒAƒhƒŒƒX‚ğƒvƒbƒVƒ…‚µ‚½‚±‚Æ‚É‚È‚Á‚Ä‚¢‚é‚©‚ç‚Å‚·B
-  ‚±‚Ì«¿‚É‚æ‚èA\‘¢Œ^‚ÌŠÖ”‚ğ‘½’i‚ÅŒÄo‚·‚±‚Æ‚ª”ñí‚ÉŠÈ’P‚É‚È‚è‚Ü‚·B
+  Packed records are not supported.
 
 
-‚SD‚Q  ŠÖ”Aè‘±‚«‚Ìnear/far‚Ì‹æ•Ê
-  ƒJƒxƒ\ƒ“ƒRƒ“ƒpƒCƒ‰‚Ì¶¬‚·‚éƒR[ƒh‚Å‚ÍAŠÖ”Eè‘±‚«‚ÌŒÄo‚ÉAnear
-ƒR[ƒ‹‚ÆfarƒR[ƒ‹‚Ì—¼•û‚ğg—p‚µ‚Ü‚·B‚±‚ê‚ç‚Ì‹æ•Ê‚Í‰º‹L‚Ìƒ‹[ƒ‹‚Ås‚¢
-‚Ü‚·B
+4. Stack frame
 
-        interface •”‚É‹Lq‚³‚ê‚½ŠÖ”Eè‘±‚« farƒR[ƒ‹
-        ‚»‚êˆÈŠO‚ÌŠÖ”Eè‘±‚«              nearƒR[ƒ‹
+4.1 Procedure call procedure
+   Procedures and functions are called in the following procedure.
 
-‚SD‚R  ŠÖ”‚ÌŒ‹‰Ê
-  ŠÖ”‚ÌŒ‹‰Ê‚ğ•Ô‚·•û–@‚ÍAŸ‚Ì’Ê‚è‚Å‚·B
+a) Stack the return address of the function on the stack (only for functions that return a structural type)
+b) Stack the argument value or address on the stack
+c) Stack the static link value
+d) Call the target function / procedure.
 
-‚PƒoƒCƒg‚Ì‡˜Œ^        ‚‚ŒƒŒƒWƒXƒ^‚ÉŒ‹‰Ê‚ğŠi”[‚µ‚ÄƒŠƒ^[ƒ“
-‚QƒoƒCƒg‚Ì‡˜Œ^        ‚‚˜ƒŒƒWƒXƒ^‚ÉŒ‹‰Ê‚ğŠi”[‚µ‚ÄƒŠƒ^[ƒ“
-ƒ|ƒCƒ“ƒ^                ‚„‚˜C‚‚˜‚ÉŠi”[i‚„‚˜‚ªƒZƒOƒƒ“ƒgA‚‚˜‚ªƒIƒtƒZƒb
-                        ƒgj
-À”                    8087‚ÌƒXƒ^ƒbƒNƒgƒbƒv‚ÉŒ‹‰Ê‚ğƒvƒbƒVƒ…‚·‚é
-\‘¢Œ^                  ŒÄo‘¤‚©‚ç“n‚³‚ê‚½ƒAƒhƒŒƒX‚ÉAŒ‹‰Ê‚ğŠi”[‚·‚éB
-                        i”z—ñ‚ÆƒŒƒR[ƒh‚Ì‚¤‚¿A‚PC‚QC‚SƒoƒCƒg‚Ì‚à‚Ì‚ÍA
-                        ƒŒƒWƒXƒ^‚ÉŠi”[‚³‚ê‚éBj
+   On the other hand, the called procedure side enters and exits to maintain the stack frame.
+Run the following code by mouth.
 
-‚SD‚S  ƒŒƒWƒXƒ^‚Ì•Û‘¶
-  è‘±‚«‹y‚ÑŠÖ”‚Å‚ÍA‰º‹L‚ÌƒŒƒWƒXƒ^‚ğ•Û‘¶‚µ‚È‚¯‚ê‚Î‚È‚è‚Ü‚¹‚ñB
+-Entrance-
 
-  ‚‚‚  ‚“‚  ‚“‚“  ‚„‚“  ‚ÌŠeƒŒƒWƒXƒ^
+        push    bp              ; bp = Save dynamic link
+        mov     bp, sp          ; Create a new stack frame
+        sub     sp, constant    ; Create an area for local variables
 
+-Exit-
 
-‚TDƒŒƒWƒXƒ^Š„“–‚Ä
-  ƒJƒxƒ\ƒ“Œ¾Œê‚ÌƒŒƒWƒXƒ^Š„“–‚Ä‚ÍA”äŠr“I’Pƒ‚Å‚·B
+        mov     sp, bp          ; Fold the local variable area
+        pop     bp              ; Erase stack frame
+        ret     Parameter size + static link area
+                                ; Retrieval of arguments and static links
 
-‚‚˜  F  ƒAƒLƒ…ƒ€ƒŒ[ƒ^
-‚‚‚˜  F  ‰‰Z•â•iƒf[ƒ^‚ğ‚‚‚˜‚É‚‚‚‚µ‚Ä‚©‚ç‰‰Z‚·‚éjAƒXƒ^ƒeƒBƒbƒNE
-          ƒŠƒ“ƒN‚ğ‚½‚Ç‚éÛ‚Ég—pAŠÔÚQÆ‚ÌƒIƒtƒZƒbƒgƒAƒhƒŒƒX‚ğŠi”[
-‚ƒ‚˜  F  ƒXƒgƒŠƒ“ƒO–½—ß‚Ìƒf[ƒ^”‚ÌŠi”[
-‚„‚˜  F  ƒAƒLƒ…ƒ€ƒŒ[ƒ^•â•i‚R‚Qƒrƒbƒgƒf[ƒ^ê‡‚Ég—pj
+[Note]
 
-‚“‚‰  F  ŠÔÚQÆˆÈŠO‚ÌƒIƒtƒZƒbƒgƒAƒhƒŒƒX‚ğŠi”[
-‚„‚‰  F  ŠÔÚQÆ‚ÌÛ‚ÉA‚…‚“‚Æ‘g‡‚¹‚ÄAƒAƒhƒŒƒX‚ğŠi”[‚·‚é
-‚‚‚  F  ƒXƒ^ƒbƒNƒtƒŒ[ƒ€‚ğw‚·
-‚“‚  F  ƒXƒ^ƒbƒNƒ|ƒCƒ“ƒ^
+(1) About static links
+   A static link is a variable of a procedure whose nested procedure is outside.
+I also connected the addresses of the stack frames as a list to access
+It is.
+   However, for the outermost defined procedure, variables in the outer scope
+Is a static variable only and does not require a stack frame. Therefore, the most
+When calling a procedure defined outside, push the stack frame
+I don't.
+   Similarly, when returning from the outermost defined procedure, in the argument area
+It will be erased only.
 
-‚„‚“  F  Ã“Iƒf[ƒ^‚ÌƒZƒOƒƒ“ƒg‚ğw‚·i’Êí‚ÍŒÅ’èj
-‚…‚“  F  huge ”z—ñ‚ÌQÆ‚âŠÔÚQÆ‚ÌÛ‚ÉAƒAƒhƒŒƒX‚ÌƒZƒOƒƒ“ƒg•”‚ğŠi”[
-‚“‚“  F  ƒXƒ^ƒbƒN—Ìˆæ‚ÌƒZƒOƒƒ“ƒgiŒÅ’èj
-‚ƒ‚“  F  ƒR[ƒh—Ìˆæ‚ÌƒZƒOƒƒ“ƒgifar|‚ƒ‚‚Œ‚Œ‚Å’l‚ª•Ï‰»‚µ‚Ä‚¢‚­j
-
-
-‚UDƒq[ƒvƒ}ƒl[ƒWƒƒ
-
-‚UD‚P  ƒq[ƒvƒ}ƒl[ƒWƒƒ‚Æ‚Í
-  Pascal Œ¾Œê‚Å‚ÍA•W€è‘±‚« new/dispose ‚ğ—p‚¢‚ÄAƒ|ƒCƒ“ƒ^‚Ìw‚·—Ìˆæ‚ğ
-Šm•Û‚µ‚Ü‚·B‚±‚Ì‹@”\‚ğƒTƒ|[ƒg‚·‚é‚½‚ß‚Ìƒ‹[ƒ`ƒ“ŒQ‚ğƒq[ƒvƒ}ƒl[ƒWƒƒ‚Æ‚¢
-‚¢‚Ü‚·B
-
-‚UD‚Q  ƒq[ƒvƒ}ƒl[ƒWƒƒ‚Ì“®ìŒ´—
-  ƒJƒxƒ\ƒ“‚Ìƒq[ƒvƒ}ƒl[ƒWƒƒ‚ÌŒ´—‚Í‰º‹L‚Ì—l‚È‚à‚Ì‚Å‚·B
-
-i‚Pj‰Šúó‘Ô‚Å‚Íƒq[ƒv—Ìˆæ‚Í‹ó
-i‚Qjƒq[ƒv‚Ìc—Ê‚ªƒƒ‚ƒŠŠ„‚è“–‚Ä‚Ì—v‹‚æ‚è‚à­‚È‚¢ê‡A64K ƒoƒCƒg’P
-      ˆÊ‚Å‚l‚r|‚c‚n‚r‚Éƒƒ‚ƒŠ‚ğ—v‹‚·‚é
-i‚Rj64KƒoƒCƒg‚Ì—Ìˆæ‚Ç‚¤‚µ‚Íƒ|ƒCƒ“ƒ^‚Å‚Â‚È‚¢‚Å‚¢‚é
-i‚Sj64KƒoƒCƒg‚Ì—Ìˆæ‚Ì“à•”‚ÍA‹ó‚«—Ìˆæ‚ğƒ|ƒCƒ“ƒ^‚Å¸‡‚É‚Â‚È‚¢‚Å‚¢‚é
-i‚Tjnew ‚Í first fit –@‚ÅÅ‰‚ÉŒ©‚Â‚©‚Á‚½—Ìˆæ‚©‚ç•K—v‚ÈƒTƒCƒY‚ğØo‚·
-i‚Ujdispose ‚ÌÛ‚É‚ÍA—×Ú‹ó‚«—Ìˆæ‚Æ‚Ìƒ}[ƒW‚ğ•K‚¸s‚¤
-
-  ‚±‚Ì•û–@‚Å‚ÍA‚‚…‚—‚Í‚»‚±‚»‚±‚ÌƒXƒs[ƒh‚Å‚·‚ªAdispose ‚Í‚©‚È‚è’x‚­‚È
-‚è‚Ü‚·B”½–ÊAŠ„‚è“–‚Ä‚½—Ìˆæ‚Ì‘Oƒwƒbƒ_‚ª‚È‚¢‚Ì‚ÅAƒƒ‚ƒŠ‚Ì–³‘Ê‚Í‚Ù‚Æ‚ñ‚Ç
-‚ ‚è‚Ü‚¹‚ñB
-  À‚ÍAƒq[ƒvƒ}ƒl[ƒWƒƒ‚Ìã‹L‚Ì“Á’¥‚ÍACabezonƒRƒ“ƒpƒCƒ‰‚ğÀ‘•‚·
-‚é“s‡‚Æ‚¢‚¦‚Ü‚·BCabezonƒRƒ“ƒpƒCƒ‰‚Íƒ|ƒCƒ“ƒ^‚Ìw‚·—Ìˆæ‚ª•s—v‚É‚È
-‚é‚ÆAdispose ‚µ‚È‚¢‚Å©‘O‚ÅŠÇ—‚µ‚Ä‚¨‚«AŸ‚Ìƒƒ‚ƒŠŠ„‚è“–‚Ä‚ÌÛ‚Ég—p‚µ
-‚Ü‚·B‚¾‚©‚çAdispose ‚ª’x‚¢‚Ì‚Í\‚í‚È‚¢‚Ì‚Å‚·B
+(2) About the return value of the function that returns the structural type
+  Caveson has the ability to treat structural variables as expressions.
+  Structured objects cannot be stored in registers, so instead
+We have adopted the rule of pushing the dress onto the stack.
+  When calling a function that returns a structural type (hereinafter referred to as a structural type function), the caller
+Allocate an area for the return value of the structural type with and push the address. This area
+Is on the stack in the current Caveson compiler.
+  On the called function side, store the result value at that address and return.
+However, at this time, the address indicating the result is not peeled off on the function side.
+Because the address indicating the result remains on the stack, the result is
+Because it is supposed to push the address of the structural type object.
+  This property makes it very easy to call structured functions in multiple stages.
 
 
-‚VDƒAƒZƒ“ƒuƒŠŒ¾Œê‚Æ‚ÌƒŠƒ“ƒN
-  ƒJƒxƒ\ƒ“EƒRƒ“ƒpƒCƒ‰‚É‚ÍƒAƒZƒ“ƒuƒŠŒ¾Œê‚Æ‚ÌƒŠƒ“ƒN‹@”\‚ª‚ ‚è‚Ü‚·B
-  ‚o‚‚“‚ƒ‚‚Œ‘¤‚©‚çƒAƒZƒ“ƒuƒŠŒ¾Œê‚ÌŠÖ”Eè‘±‚«‚ğŒÄo‚·‚½‚ß‚É‚ÍAexternal
-éŒ¾‚ğ—˜—p‚µ‚Ü‚·B
+4.2 Distinguishing between near / far of functions and procedures
+   In the code generated by the Caveson compiler, near is used to call functions and procedures.
+Use both call and far call. These distinctions are made according to the following rules
+I will.
 
-y—áz
+        interface Functions / procedures described in the section  far call
+        Other functions / procedures                               near call
+
+4.3 Function result
+   Here's how to return the result of a function:
+
+1-byte order type       Store the result in the al register and return
+2-byte order type       Store the result in the ax register and return
+Pointer                 Stored in dx, ax (dx is a segment, ax is an offset)
+Real number             Push results to the top of the 8087 stacké
+Stereotype              Store the result at the address passed by the caller.
+                         (Of the arrays and records, those with 1, 2 and 4 bytes are
+                         Stored in a register. )
+
+4.4 Saving registers
+   Procedures and functions must store the following registers.
+
+   Each register of bp sp ss ds
+
+
+5. Register allocation
+   Register allocation in the Caveson language is relatively simple.
+
+ax: Accumulator
+bx: Computation assistance (calculate after popping data to bx), static
+           Stores the offset address of the indirect reference used when following the link
+cx: Store the number of string instruction data
+dx: Accumulator assistance (used for 32-bit data)
+
+si: Stores offset addresses other than indirect references
+di: Stores the address in combination with es for indirect reference.
+bp: Refers to the stack frame
+sp: Stack pointer
+
+ds: Refers to a segment of static data (usually fixed)
+es: Stores the segment part of the address when referencing or indirectly referencing a huge array.
+ss: Stack area segment (fixed)
+cs: Segment of code area (value changes with far-all)
+
+
+6. Heap manager
+
+6.1 What is a heap manager?
+   In the Pascal language, the standard procedure new / dispose is used to determine the area pointed to by the pointer.
+Secure A group of routines to support this function is called a heap manager.
+is.
+
+6.2 Operating principle of heap manager
+   The principle of Caveson's heap manager is as follows.
+
+(1) The heap area is empty in the initial state
+(2) If the remaining amount of the heap is less than the memory allocation request, only 64 Kbytes
+       Request memory from MS-DOS
+(3) 64 Kbyte areas are connected by pointers.
+(4) Inside the 64K byte area, free areas are connected in ascending order with pointers.
+(5) new cuts out the required size from the area first found by the first fit method.
+(6) When disposing, be sure to merge with the adjacent free space.
+
+   With this method, new is reasonably fast, but dispose is fairly slow.
+I will. On the other hand, there is no front header for the allocated area, so there is almost no memory waste.
+There is none.
+   In fact, the above features of the heap manager implement the Cabezon compiler.
+It can be said that it is convenient. The Cabezon compiler no longer requires the area pointed to by the pointer
+Then, do not dispose, manage it yourself, and use it for the next memory allocation
+I will. So it's okay for dispose to be slow.
+
+
+7. Link with assembly language
+   The Caveson compiler has the ability to link with assembly language.
+   In order to call assembly language functions / procedures from Pascal side, external
+Use the declaration.
+
+[Example]
         procedure asmRoutine(x, y : integer); external;
 
-  ‚±‚ÌŠÖ”Eè‘±‚«‚ÍAinterface •”‚É’u‚­–‚àA’u‚©‚È‚¢–‚à‚Å‚«‚Ü‚·B
-interface •”‚É’u‚¢‚½ê‡‚ÍAfarƒR[ƒ‹‚ÅŒÄo‚³‚ê‚Ü‚·B’u‚©‚È‚¢ê‡‚ÍA
-near‚Å‚·B‚Ç‚¿‚ç‚Ìê‡‚É‚àAƒAƒZƒ“ƒuƒŠŒ¾Œê‚Å’è‹`‚·‚éÛ‚ÉApublicéŒ¾‚·‚é
-–‚ğ–Y‚ê‚È‚¢‚Å‰º‚³‚¢B
-  ‚à‚¤ˆê‚Â’ˆÓ‚ª•K—v‚Å‚·BƒJƒxƒ\ƒ“‘¤‚Å‰¼’è‚µ‚½ƒZƒOƒƒ“ƒg–¼‚ÆƒAƒZƒ“ƒuƒŠŒ¾
-Œê‘¤‚ÅÀÛ‚É’è‹`‚µ‚½ƒZƒOƒƒ“ƒg–¼‚ªˆê’v‚µ‚Ä‚¢‚È‚¯‚ê‚ÎAlink‚Éufix
-up overflowv‚ÌƒGƒ‰[‚ª‚Å‚Ü‚·B
-  ƒJƒxƒ\ƒ“‘¤‚Å‰¼’è‚·‚éƒZƒOƒƒ“ƒg–¼‚ÍŸ‚Ìƒ‹[ƒ‹‚ÅŒˆ‚ß‚ç‚ê‚Ü‚·B
+   This function / procedure can be placed in the interface part or not.
+If placed in the interface section, it will be called with a far call. If not,
+It is near. In both cases, declare public when defining in assembly language
+Don't forget that.
+   One more note is needed. Segment name and assembly language assumed on the Caveson side
+If the segment names actually defined on the word side do not match, "fix" at link time
+I get an "up overflow" error.
+   The segment name assumed on the Caveson side is determined by the following rules.
 
-  external éŒ¾‚Ì’u‚©‚ê‚Ä‚¢‚éƒ\[ƒXƒtƒ@ƒCƒ‹–¼  {  h_TEXTh
+  external Source file name where the declaration is placed + "_TEXT"
 
-  —á‚¦‚ÎAexternal éŒ¾‚ªAabc.pas ‚Æ‚¢‚¤ƒtƒ@ƒCƒ‹‚ÉŠi”[‚³‚ê‚Ä‚¢‚éê‡‚ÍA
-abc_TEXT ‚Æ‚¢‚¤ƒZƒOƒƒ“ƒg–¼‚ª‰¼’è‚³‚ê‚é–‚É‚È‚è‚Ü‚·B
+   For example, if the external declaration is stored in a file called abc.pas,
+The segment name abc_TEXT will be assumed.
 
-  Ÿ‚ÉƒRƒ“ƒpƒCƒ‹EƒŠƒ“ƒN‚Ì•û–@‚É‚Â‚¢‚Äà–¾‚µ‚Ü‚·B
-  ƒRƒ“ƒpƒCƒ‰Eƒhƒ‰ƒCƒo cab.exe ‚ğg—p‚·‚ê‚ÎA•ªŠ„ƒRƒ“ƒpƒCƒ‹‚àŠÈ’P‚Å‚·B
-—á‚¦‚ÎA‚o‚‚“‚ƒ‚‚Œ‚Ìƒ\[ƒX‚ª a.pasAƒAƒZƒ“ƒuƒŠŒ¾Œê‚Ìƒ\[ƒX‚ª b.asm ‚Æ
-‚¢‚¤ƒtƒ@ƒCƒ‹–¼‚¾‚Á‚½‚Æ‚·‚é‚ÆA
+   Next, I will explain how to compile and link.
+   Split compilation is also easy with the compiler driver cab.exe.
+For example, Pascal source is a.pas and assembly language source is b.asm.
+If the file name is
 
-A>CAB A.PAS B.ASM       © .ASM ‚ğw’è
+A>CAB A.PAS B.ASM       <- Specify .ASM
 
-  ‚Æ‘Å‚Ş‚¾‚¯‚Å‚·B
-  ¡AB.ASM ‚ÌƒfƒoƒbƒO‚ÍŠ®—¹‚µ‚ÄAA.PAS ‚ÌƒfƒoƒbƒO’†‚¾‚Æ‚·‚é‚ÆAƒRƒ“ƒpƒC
-ƒ‹‚Ì“x‚É B.ASM ‚ÌƒAƒZƒ“ƒuƒ‹‚Ü‚Ås‚¤•K—v‚Í‚ ‚è‚Ü‚¹‚ñB‚±‚Ìê‡‚É‚ÍA
+   Just type in. Now that B.ASM has been debugged and A.PAS is being debugged,
+     he does not have to assemble B.ASM every time he compiles. In this case
 
-A>CAB A.PAS B.OBJ       © .OBJ ‚ğw’è
+A>CAB A.PAS B.OBJ       <- Specify .OBJ
 
-‚Æ‚·‚ê‚ÎA–³‘Ê‚ğÈ‚­–‚ª‚Å‚«‚Ü‚·B
-  ƒ\[ƒXƒtƒ@ƒCƒ‹‚Ì”‚ª”ñí‚É‘½‚¢ê‡‚ÍAmake‚Ìg—p‚ğ‚¨Š©‚ß‚µ‚Ü‚·B
+If so, you can save waste.
+   If you have a very large number of source files, we recommend using make.
 
-ˆÈã
+that's all
 
-“¿ŠÛ_^ockeghem
+Hiroshi Tokumaru / ockeghem
 	htokumar@jun.email.ne.jp
 	QGB01521@niftyserve.or.jp
 	hiroshi_tokumaru@msn.com

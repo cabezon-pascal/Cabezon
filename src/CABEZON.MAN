@@ -1,79 +1,79 @@
-カベソンVer０．０８  ユーザーズ・マニュアル
+Caveson Ver0.08 User's Manual
 
-１．準備
+1. ready
 
-（１）ハードウェア・ＯＳ
-  コンパイラ本体はカベソン自体で記述されています。
-  ライブラリはカベソン自体と TASM です。
-  基本的には、MS-DOS上であれば機種に依存しないはずですが、確認はPC-9801
-UV11 及び PC-9801NS/E 上でのみ行っています。
-  浮動小数点演算を含むプログラムの実行には8087（287,387,487SXまたは486DX
-以上）が必要です。浮動小数点演算を含んでいても、コンパイルするだけなら、
-8087は必要ありません。コンパイラ自体は整数演算の機能だけを使って記述され
-ているからです。
+(1) Hardware / OS
+   The compiler itself is written in Caveson itself.
+   The libraries are Caveson itself and TASM.
+   Basically, if it is on MS-DOS, it should not depend on the model, but confirmation is PC-9801
+UV11 and he only does on PC-9801NS / E.
+   8087 (287,387,487SX or 486DX) for running programs that include floating point arithmetic
+Above) is required. Even if it contains floating point arithmetic, if you just compile it,
+8087 is not needed. The compiler itself is written using only the functions of integer arithmetic
+Because it is.
 
-（２）ファイルの準備
-  カベソンの実行には、アセンブラとリンカが必要です。私が動作を確認したア
-センブラ／リンカには下記のものがあります
+(2) File preparation
+   An assembler and linker are required to run Caveson. I confirmed the operation
+The sembra / linker includes the following
 
-    アセンブラ
-        MASM   Ver５．１        （３．０以前でも動くことは動く）
-        TASM   Ver１．０以上
-        R86    Ver１．１１      （LSI C-86に添付のもの）
-        A86    Ver３．１４
+    assembler
+        MASM   Ver5.1           (It works even before 3.0)
+        TASM   Ver1.0 or higher
+        R86    Ver1.11          (attached to LSI C-86)
+        A86    Ver3.14
 
-    リンカ
-        LINK   Ver３．０以上    （MS-DOSに添付の物でも可）
-        TLINK  Ver１．０以上
-        BLINK  Ver２．１５      （Zortech C++に添付のもの）
-        LLD    Ver１．１０      （LSI C-86に添付のもの）
-        RTLINK Ver２．０３
+    linker
+        LINK   Ver3.0 or higher (can be attached to MS-DOS)
+        TLINK  Ver1.0 or higher
+        BLINK  Ver2.15          (attached to Zortech C++)
+        LLD    Ver1.10          (attached to LSI C-86)
+        RTLINK Ver2.03
 
-  つまり、LSI C-86 Ver3.3（試食版でも可）をお持ちの方は、カベソンを実行
-できることになります。但し、アセンブラA86、R86では、一部の機能が利
-用できません。可能であれば、MASMまたはTASMをお使い下さい。
-  配付されているカベソンの実行形式は、TASM／TLINKの組合わせを使用して作
-成しています。
-　アセンブラ／リンカを含めた下記のプログラムをカレントディレクトリか、
-PATH で指定されたディレクトリに置きます。
+   In other words, if you have LSI C-86 Ver3.3 (a tasting version is also acceptable), run Caveson.
+You will be able to do it. However, some functions are useful in assembler A86 and R86.
+Cannot be used. If possible, use MASM or TASM.
+   The execution format of the distributed Caveson is created using the combination of TASM / TLINK.
+It is made up.
+The following programs including the assembler / linker can be placed in the current directory or
+Place it in the directory specified by PATH.
 
-    CAB.EXE     （コンパイラドライバ）    アーカイブに含まれています
-    CAB1.EXE    （コンパイラ本体）          〃
-    CABEZON.INI （組込名の宣言）            〃
-    CABEZON.ERR （エラーメッセージ）        〃
-    MASM.EXE    （アセンブラ）            ユーザ側で用意して下さい
-    LINK.EXE    （リンカ）                  〃
+    CAB.EXE     (Compiler driver)              Included in the archive
+    CAB1.EXE    (Compiler body)                          "
+    CABEZON.INI (Declaration of embedded name)           "
+    CABEZON.ERR (Error message)                          "
+    MASM.EXE    (assembler)                    Please prepare on the user side
+    LINK.EXE    (linker)                                      "
 
-【注】 CAB1.EXE と CABEZON.INI、CABEZON.ERR は同一ディレクトリに置いて下
-       さい。
+[Note] CAB1.EXE, CABEZON.INI, and CABEZON.ERR should be placed in the same directory.
+       Sai.
 
-  同様に、ライブラリ・ファイルをカレントディレクトリに置きます。
+  Similarly, put the library files in the current directory.
 
-    CLIB.LIB    （ライブラリ）        アーカイブに含まれています
+    CLIB.LIB    (Library)        Included in the archive
 
-  リンカとして MS-LINK または、RT-LINK、ZortechC++ 付属のリンカ (B-LINK)
-を使用する場合には、CLIB.LIB を環境変数 LIB で示されたディレクトリに置く
-こともできます。
-  また、MASMとLINKの代りに、TASMとTLINKを使用することも
-できます。この場合は、下記のコマンドで、環境変数をセットしておいて下さい。
+   MS-LINK as a linker, RT-LINK, Zortech C++ attached linker (B-LINK)
+If you use, put CLIB.LIB in the directory indicated by the environment variable LIB.
+can also do.
+   You can also use TASM and TLINK instead of MASM and LINK.
+I can do it. In this case, set the environment variable with the following command.
 
 A>SET ASM=TASM
 A>SET LINK=TLINK
 
-  同様の方法で、A86やR86、他のリンカを指定することができます。
+  You can specify A86, R86, and other linkers in a similar way.
 
 
-２．コンパイル、リンク
-  下記の要領で、コンパイルをして下さい。アセンブラとリンカは自動的に起動
-されます。拡張子を省略した場合は .PAS が仮定されます。
+2. Compile, link
+   Follow the procedure below to compile. Assembler and linker start automatically
+Will be done. If you omit the extension, .PAS is assumed.
 
-A>CAB ソース・ファイル名
+A>CAB Source file name
 
-  複数のファイルを同時にしていすると、全てのファイルをコンパイル・アセン
-ブルした後、１つのプログラムにまとめてリンクします。プログラム名は最初の
-ファイル名と同じになります。
-  コンパイル・オプションをとくに指定しなかった場合には、コンパイル・アセ
-ンブル・リンクが次々に行われます。（下記参照）
+   If you have multiple files at the same time, compile and assemble all the files
+After bulling, link to one program at once. The program name is the first
+It will be the same as the file name.
+   If you do not specify any compile options, compile asses.
+Numble links are made one after another. (See below)
 
                                CAB
                  +-------------+|+-------------+
@@ -81,43 +81,43 @@ A>CAB ソース・ファイル名
                 CAB1           MASM           LINK
         A.PAS  ---->  A.ASM   ---->  A.OBJ   ---->   A.EXE
 
-  上記のコンパイル・リンク・アセンブルの流れの途中から実行したい場合、例
-えばMASMのアセンブル以降を行う場合には、ファイルの拡張子で指定します。
-たとえば、次のようになります。
+   If you want to execute from the middle of the above compile / link / assemble flow, for example
+For example, when assembling MASM or later, specify the file extension.
+For example:
 
 A>CAB A.ASM B.OBJ
 
-  この場合、A.ASM をアセンブルした後、B.OBJ と結合して１つのプログラムに
-リンクします。この機能を使うと、修正したモジュールだけをコンパイルできる
-ので、分割コンパイルの際にとくに有効です。
+   In this case, after assembling A.ASM, combine it with B.OBJ into one program.
+Link This feature allows you to compile only the modified modules
+Therefore, it is especially effective when compiling separately.
 
-  上記とは逆に、一連のコンパイル作業を途中で止めるよう指定することもでき
-ます。この場合は、コンパイラの起動時オプションで指定します。次の様なオプ
-ションがあります。
+   Contrary to the above, you can also specify to stop the series of compilation work in the middle.
+I will. In this case, specify it in the compiler startup option. The following options
+There is an option.
 
-    /s  コンパイルのみ実行
-    /c  コンパイルとアセンブルのみ実行
-        （ファイル名 .ASM を指定した場合は、アセンブルのみ）
+    /s  Compile only
+    /c  Compile and assemble only
+        (If you specify the file name .ASM, only assemble)
 
-３．他の機能
+3. Other features
 
-（１）起動時オプション
-        /j  アセンブラに JMP 命令の最適化を指示する。（TASM3.0 以上、ま
-            たはR86のみ有効）
-        /d  コンパイル時にコンパイラ自体のデバッグ表示をします。
-        /s  コンパイルして .ASM ファイルを生成する。
-        /c  コンパイルとアセンブルを実行して、.OBJ ファイルを生成する。
-        /l  アセンブル時にリストファイルを生成する。
-        /m  リンク時にマップファイルを生成する。
+(1) Startup options
+        /j  Instructs the assembler to optimize JMP instructions. (TASM3.0 or higher,
+            Or only R86 is valid)
+        /d  Shows a debug display of the compiler itself at compile time.
+        /s  Compile to generate an .ASM file.
+        /c  Compile and assemble to generate an .OBJ file.
+        /l  Generate a list file when assembling.
+        /m  Generate a map file when linking.
 
-  起動時オプションはソースファイル指定の前、または後に指定します。大文字
-と小文字の区別はしません。
+   Specify the startup options before or after specifying the source file. uppercase letter
+And lowercase.
 
-【例】
+[Example]
     A>CAB BEM.PAS /C
 
 
-徳丸浩／ockeghem
+Hiroshi Tokumaru / ockeghem
 	htokumar@jun.email.ne.jp
 	QGB01521@niftyserve.or.jp
 	hiroshi_tokumaru@msn.com
