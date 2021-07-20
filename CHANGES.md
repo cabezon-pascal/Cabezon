@@ -57,7 +57,7 @@ and [DeepL Translate](https://www.deepl.com/). Improvements are welcome.
 - Fixed a bug in the case where a procedure declared in the `interface`
   clause is declared as `external`.
 - The global `goto` statement can now be used. This feature was originally
-  supported, but a bug in Ver0.06 prevented its use.
+  supported, but a bug in version 0.06 prevented its use.
 - Fixed some bugs in the document. The text formatter was changed to FPLF.
 
 ## [0.06] - 1991-11-19
@@ -94,8 +94,8 @@ and [DeepL Translate](https://www.deepl.com/). Improvements are welcome.
 - Implemented a built-in function that acquires run-time parameters.
 
 ### Changed
-- The description language was changed from Turbo Pascal Ver5.5 to Cabezon
-  itself.
+- The description language was changed from Turbo Pascal version 5.5 to
+  Cabezon itself.
 
 ## [0.03] - 1991-02-20
 ### Added
